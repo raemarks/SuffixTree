@@ -1,5 +1,6 @@
 #include "io.h"
 
+#include <iostream>
 #include <cstring>
 
 #define MB 1024*1024
@@ -24,7 +25,7 @@ ReadInputFasta(
 	memset(buf, 0, MB);
 
 	// Skip over '>'
-	while (c != '>') {
+	while (c != '>' && !in.eof()) {
 		in >> c;
 	}
 
@@ -36,9 +37,10 @@ ReadInputFasta(
 
 	i = 0;
 	c = '\0';
-	while (c != '>') {
+	while (c != '>' && !in.eof()) {
 		if (notLineEnd(c)) {
 			buf[i++] = c;
+			std::cout << c;
 		}
 		in >> c;
 	}
