@@ -7,6 +7,8 @@ namespace suffixtree {
 
 class SuffixTreeNode {
 	public:
+		SuffixTreeNode(int id, SuffixTreeNode *parent, int beg, int end);
+
 		std::vector<SuffixTreeNode*> GetChildren();
 
 		void AddChild(SuffixTreeNode *node);
