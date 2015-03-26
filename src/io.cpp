@@ -37,10 +37,12 @@ ReadInputFasta(
 
 	i = 0;
 	c = '\0';
+	memset(buf, 0, MB);
+
+	in >> c;
 	while (c != '>' && !in.eof()) {
 		if (notLineEnd(c)) {
 			buf[i++] = c;
-			std::cout << c;
 		}
 		in >> c;
 	}
