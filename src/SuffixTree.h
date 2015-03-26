@@ -34,7 +34,6 @@ class SuffixTree
 		void DisplayChildren(
 			SuffixTreeNode *node
 			);
-		//node->GetChildren();
 
 		void EnumerateNodesDFS();
 };
