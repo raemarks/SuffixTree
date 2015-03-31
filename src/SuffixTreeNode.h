@@ -5,24 +5,34 @@
 
 namespace suffixtree {
 
-class SuffixTreeNode {
+class Tree;
+
+class Node {
+
+	friend Tree;
+
 	public:
-		SuffixTreeNode(int id, SuffixTreeNode *parent, int beg, int end);
+		Node(int id, Node *parent, int beg, int end, int depth);
 
-		std::vector<SuffixTreeNode*> GetChildren();
+		std::vector<Node*> GetChildren();
 
-		void AddChild(SuffixTreeNode *node);
+		void AddChild(Node *node);
 
 	private:
-		SuffixTreeNode *parent;
+		Node *parent;
 
-		SuffixTreeNode *suffixLink;
+		Node *suffixLink;
 
-		std::vector<SuffixTreeNode*> children;
+		std::vector<Node*> children;
 
-		int beg, end;
+		//Equivalent to the "edge label". Beg is the index of the first element
+		//of the substring described by the edge in the original input string.
+		//len is the length of the edge label and consequently the substring.
+		int beg, len;
 
 		int id;
+
+		int stringDepth;
 };
 
 }

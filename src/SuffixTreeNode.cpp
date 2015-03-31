@@ -1,13 +1,32 @@
 #include "SuffixTreeNode.h"
 
 namespace suffixtree {
-	SuffixTreeNode::SuffixTreeNode(int id, SuffixTreeNode *parent, int beg, int end) : id(id), beg(beg), end(end), parent(parent) {}
-		std::vector<SuffixTreeNode*> SuffixTreeNode::GetChildren() {
-			return children;
-		}
 
-		void SuffixTreeNode::AddChild(SuffixTreeNode *node) {
-			children.push_back(node);
-		}
+Node::Node(
+	int id,
+	Node *parent,
+	int beg,
+	int len,
+	int depth
+	):
+	id(id),
+	beg(beg),
+	len(len),
+	parent(parent),
+	suffixLink(nullptr),
+	stringDepth(depth)
+{
+}
+
+std::vector<Node*>
+Node::GetChildren() {
+	return children;
+}
+
+void
+Node::AddChild(Node *node) {
+	children.push_back(node);
+}
+
 }
 
