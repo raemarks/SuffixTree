@@ -14,18 +14,10 @@ Node::Node(
 	len(len),
 	parent(parent),
 	suffixLink(nullptr),
-	stringDepth(depth)
+	stringDepth(depth),
+	child(nullptr),
+	sibling(nullptr)
 {
-}
-
-std::vector<Node*>
-Node::GetChildren() {
-	return children;
-}
-
-void
-Node::AddChild(Node *node) {
-	children.push_back(node);
 }
 
 }

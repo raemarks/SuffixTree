@@ -5,6 +5,9 @@
 
 #include "SuffixTreeNode.h"
 
+#define panic(x) \
+	printf(x); exit(1);
+
 namespace suffixtree
 {
 
@@ -78,6 +81,7 @@ class Tree
 			);
 
 		void EnumerateNodesDFS();
+
 };
 
 }

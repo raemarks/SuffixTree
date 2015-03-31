@@ -14,16 +14,14 @@ class Node {
 	public:
 		Node(int id, Node *parent, int beg, int end, int depth);
 
-		std::vector<Node*> GetChildren();
-
 		void AddChild(Node *node);
 
 	private:
 		Node *parent;
+		Node *child;
+		Node *sibling;
 
 		Node *suffixLink;
-
-		std::vector<Node*> children;
 
 		//Equivalent to the "edge label". Beg is the index of the first element
 		//of the substring described by the edge in the original input string.

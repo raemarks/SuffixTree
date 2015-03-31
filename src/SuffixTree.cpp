@@ -126,7 +126,8 @@ Tree::breakEdge(
 	replaceChild(parent, newNode);
 
 	//Insert n under new node
-	newNode->AddChild(n);
+	addChildToNode(newNode, n);
+
 	//Alter n
 	n->parent = newNode;
 	n->len = n->len - i;
@@ -140,14 +141,15 @@ Tree::getChildByLabelBeginning(
 	char c
 	)
 {
-	std::vector<Node *> children = n->GetChildren();
+	Node *cur = n->child;
 
-	for (Node *child : children)
+	while (cur != nullptr)
 	{
-		if (input[child->beg] == c)
-			return child;
+		if (input[cur->beg] == c)
+			return cur;
+		cur = cur->sibling;
 	}
-	return nullptr;
+	return cur;
 }
 
 void 
@@ -156,14 +158,39 @@ Tree::addChildToNode(
 	Node *child
 	)
 {
-}
+	Node *cur = parent->child;
+	if (cur == nullptr) {
+		parent->child = child;
+		return;
+	}
 
-void 
-Tree::replaceChild(
-	Node *parent,
-	Node *newChild
-	)
-{
+	char k = input[child->beg];
+	if (k == '$') {
+		if (cur != nullptr && input[cur->beg] == '$') {
+			panic("shouldnt already have child with this label");
+		}
+
+		child->sibling = cur;
+		parent->child = child;
+		return;
+	}
+
+	Node *prev = nullptr;
+	while(cur != nullptr) {
+		if (k < input[cur->beg]) {
+			child->sibling = cur;
+			if (prev == nullptr) {
+				parent->child = child;
+			} else {
+				prev->sibling = child;
+			}
+			return;
+		}
+
+		prev = cur;
+		cur = cur->sibling;
+	}
+	prev->sibling = child;
 }
 
 void
@@ -177,6 +204,27 @@ Tree::DisplayChildren(
 void
 Tree::EnumerateNodesDFS()
 {
+}
+
+void Tree::replaceChild(Node *parent, Node *node) {
+	Node *prev = nullptr;
+	Node *cur = parent->child;
+	char k = input[node->beg];
+
+	while (cur != nullptr) {
+		if (k == input[cur->beg]) {
+			node->sibling = cur->sibling;
+			if (prev == nullptr) {
+				parent->child = node;
+			} else {
+				prev->sibling = node;
+			}
+			return;
+		}
+
+		prev = cur;
+		cur = cur->sibling;
+	}
 }
 
 }
