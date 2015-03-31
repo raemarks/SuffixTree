@@ -85,7 +85,7 @@ Tree::nodeHopToV(
 {
 	int i = 0, remaining;
 	char c;
-	Node *n1 = start, n2;
+	Node *n1 = start, *n2;
 
 	while (true) {
 		remaining = len - i;
