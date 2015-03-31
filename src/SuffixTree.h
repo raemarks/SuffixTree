@@ -55,6 +55,8 @@ class Tree
 			char c
 			);
 
+		// i is the index before which to break the edge of Node n and create
+		// another internal node..
 		Node *breakEdge(
 			Node *n,
 			int i

@@ -51,12 +51,6 @@ Tree::insertSuffix(
 	int suffix
 	)
 {
-
-	if (prevLeaf == nullptr) {
-		//Just insert first suffix as a leaf to root.
-		//return it
-	}
-
 	Node *u = prevLeaf->parent;
 	if (u->suffixLink != nullptr) {
 		//Case 1: u already existed at the start of iteration (suffix-1).
@@ -69,7 +63,14 @@ Tree::insertSuffix(
 		//Case 2A: u was created during iteration (suffix-1), and u' is not root
 		Node *uprime = u->parent;
 		Node *vprime = uprime->suffixLink;
+		//Beta is the edge label between u and uprime.
 		int beta = u->beg;
+		int betalen = u->len;
+
+		Node *v = nodeHopToV(vprime, beta, betalen);
+
+		return findPathAndInsert(v, suffix, suffix + v->stringDepth,
+			input.length() - suffix - v->stringDepth);
 
 	} else {
 		//Case 2B: u was created during iteration (suffix-1), and u' is the root
@@ -108,8 +109,6 @@ Tree::nodeHopToV(
 	}
 }
 
-//TODO: move comment to header.
-// i is the index before which to break the edge of Node n.
 Node *
 Tree::breakEdge(
 	Node *n,
