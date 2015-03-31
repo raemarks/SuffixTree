@@ -57,6 +57,16 @@ class Tree
 			int i
 			);
 
+		void addChildToNode(
+			Node *parent,
+			Node *child
+			);
+
+		void replaceChild(
+			Node *parent,
+			Node *newChild
+			);
+
 	public:
 		Tree(
 			std::string& input,

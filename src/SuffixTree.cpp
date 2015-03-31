@@ -94,7 +94,7 @@ Tree::nodeHopToV(
 
 		if (n2->len > remaining) {
 			//break edge right before index 'remaining' of the edge.
-
+			return breakEdge(n2, remaining);
 
 		} else if (n2->len == remaining) {
 			//Beta is perfectly consumed, we have found V.
@@ -123,13 +123,15 @@ Tree::breakEdge(
 	//Make new node
 	newNode = new Node(assignId(), parent, n->beg, i, parent->stringDepth + i);
 	//Remove n from parent's children, replace with new node.
-	parent->ReplaceChild(newNode);
+	replaceChild(parent, newNode);
 
 	//Insert n under new node
 	newNode->AddChild(n);
 	//Alter n
 	n->parent = newNode;
 	n->len = n->len - i;
+
+	return newNode;
 }
 
 Node *
@@ -146,6 +148,22 @@ Tree::getChildByLabelBeginning(
 			return child;
 	}
 	return nullptr;
+}
+
+void 
+Tree::addChildToNode(
+	Node *parent,
+	Node *child
+	)
+{
+}
+
+void 
+Tree::replaceChild(
+	Node *parent,
+	Node *newChild
+	)
+{
 }
 
 void
