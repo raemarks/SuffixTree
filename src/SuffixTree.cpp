@@ -24,6 +24,9 @@ void Tree::Build() {
 	Node *n = root;
 	for (int i = 0; i < input.length(); i++) {
 		n = insertSuffix(n, i);
+		std::cout << "Tree after inserting suffix " << i << std::endl;
+		PrintTree();
+		std::cout << std::endl;
 	}
 }
 
@@ -145,10 +148,14 @@ Tree::nodeHopToV(
 	char c;
 	Node *n1 = start, *n2;
 
+	if (len == 0)
+		return start;
+
 	while (true) {
 		remaining = len - i;
 		c = input[beta + i];
 		n2 = getChildByLabelBeginning(n1, c);
+
 
 		if (n2->len > remaining) {
 			//break edge right before index 'remaining' of the edge.
