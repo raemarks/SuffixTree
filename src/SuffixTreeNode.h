@@ -12,7 +12,7 @@ class Node {
 	friend Tree;
 
 	public:
-		Node(int id, Node *parent, int beg, int end, int depth);
+		Node(int id, Node *parent, int beg, int len);
 
 		void AddChild(Node *node);
 

@@ -11,7 +11,7 @@ Tree::Tree(
 	alphabet(alphabet)
 {
 	nextNodeId = input.length();
-	root = new Node(assignId(), nullptr, 0, 0, 0);
+	root = new Node(assignId(), nullptr, 0, 0);
 
 	Node *n = root;
 	for (int i = 0; i < input.length(); i++) {
@@ -27,7 +27,14 @@ Tree::findPathAndInsert(
 	int len
 	)
 {
+	Node *child = getChildByLabelBeginning(node, input[beg]);
 
+	// No child by that label
+	if (child == nullptr) {
+		Node *nchild = new Node(assignId(), node, beg, len);
+	}
+	panic("not finished");
+	return nullptr;
 }
 
 bool
@@ -79,7 +86,7 @@ Tree::insertSuffix(
 		int betaprime = u->beg + 1; // beta = x betaprime
 		int betaprimelen = u->len - 1;
 
-		Node *v = nodeHopToV(vprime, betaprim, betaprimelen);
+		Node *v = nodeHopToV(vprime, betaprime, betaprimelen);
 
 		return findPathAndInsert(v, suffix, suffix + v->stringDepth,
 			input.length() - suffix - v->stringDepth);
@@ -129,7 +136,7 @@ Tree::breakEdge(
 	parent = n->parent;
 
 	//Make new node
-	newNode = new Node(assignId(), parent, n->beg, i, parent->stringDepth + i);
+	newNode = new Node(assignId(), parent, n->beg, i);
 	//Remove n from parent's children, replace with new node.
 	replaceChild(parent, newNode);
 

@@ -6,18 +6,19 @@ Node::Node(
 	int id,
 	Node *parent,
 	int beg,
-	int len,
-	int depth
+	int len
 	):
 	id(id),
 	beg(beg),
 	len(len),
 	parent(parent),
 	suffixLink(nullptr),
-	stringDepth(depth),
 	child(nullptr),
 	sibling(nullptr)
 {
+	if (parent != nullptr) {
+		stringDepth = parent->stringDepth + len;
+	}
 }
 
 }
