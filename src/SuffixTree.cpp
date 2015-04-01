@@ -42,7 +42,7 @@ Tree::findPathAndInsert(
 
 	// No child by that label
 	if (child == nullptr) {
-		Node *nchild = new Node(assignId(), node, beg, len);
+		Node *nchild = new Node(suffix, node, beg, len);
 		addChildToNode(node, nchild);
 		return nchild;
 	}
@@ -105,6 +105,7 @@ Tree::insertSuffix(
 		int betalen = u->len;
 
 		Node *v = nodeHopToV(vprime, beta, betalen);
+		u->suffixLink = v;
 
 		return findPathAndInsert(v, suffix, suffix + v->stringDepth,
 			input.length() - suffix - v->stringDepth);
@@ -117,6 +118,7 @@ Tree::insertSuffix(
 		int betaprimelen = u->len - 1;
 
 		Node *v = nodeHopToV(vprime, betaprime, betaprimelen);
+		u->suffixLink = v;
 
 		return findPathAndInsert(v, suffix, suffix + v->stringDepth,
 			input.length() - suffix - v->stringDepth);
