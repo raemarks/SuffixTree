@@ -53,9 +53,9 @@ Tree::findPathAndInsert(
 		if (input[beg + i] != input[child->beg + i]) {
 			// SPLIT
 			Node *mid = breakEdge(child, i);
-			printf("= splitting:\n");
+			printf("= splitting: ");
 			PrintNodeLabel(mid);
-			return findPathAndInsert(mid, suffix, (beg + i) - 1, (len - i) + 1);
+			return findPathAndInsert(mid, suffix, (beg + i), (len - i));
 		}
 	}
 

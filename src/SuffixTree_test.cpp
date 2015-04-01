@@ -35,7 +35,7 @@ int TestFindPathAndInsertBasic() {
 	printf("b label:\n");
 	t->PrintNodeLabel(c_b);
 
-	Assert(c_a->len == 2, "Child has bad length: %d != %d", 2, c_a->len);
+	Assert(c_a->len == 3, "Child has bad length: %d != %d", 3, c_a->len);
 
 	return PASS;
 }
