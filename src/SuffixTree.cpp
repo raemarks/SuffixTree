@@ -239,7 +239,17 @@ Tree::DisplayChildren(
 	Node *node
 	)
 {
-//node->GetChildren();
+	Node *child = node->child;
+
+	while (child != nullptr) {
+		std::cout << "Node id: " << child->id << "Edge lable: '";
+		for (int i = child->beg; i < child->len + child->beg; i++) {
+			std::cout << input[i];
+		}
+		std::cout << "'" << std::endl;
+
+		child = child->sibling;
+	}
 }
 
 void
@@ -281,11 +291,29 @@ void Tree::recursiveEnumerateBWT(
 {
 	//Must be a leaf node.
 	if (n->id < input.length()) {
+		if (n->id == input.length()-1) {
+			//Set index at beginning of array
+			B[0] = input[n->id];
+
+		} else {
+			B[n->id+1] = input[n->id];
+		}
+	}
+
+	Node *child = n->child;
+
+	while (child != nullptr) {
+		recursiveEnumerateBWT(child);
+		child = child->sibling;
 	}
 }
 
 void Tree::EnumerateBWT()
 {
+	recursiveEnumerateBWT(root);
+	for (auto it = B.begin(); it != B.end(); ++it) {
+		std::cout << *it << std::endl;
+	}
 }
 
 void Tree::replaceChild(Node *parent, Node *node) {
