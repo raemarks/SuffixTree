@@ -28,14 +28,6 @@ class Tree
 
 		int assignId();
 
-		//Returns a pointer to the newly created leaf node
-		Node *findPathAndInsert(
-			Node *node,
-			int suffix,
-			int beg,
-			int len
-			);
-
 		//Returns the node hopped-to, newly created if necessary.
 		Node *nodeHopToV(
 			Node *start,
@@ -78,12 +70,26 @@ class Tree
 			std::string alphabet
 			);
 
+		void Build();
+
 		void DisplayChildren(
 			Node *node
 			);
 
 		void EnumerateNodesDFS();
 
+		//Returns a pointer to the newly created leaf node
+		Node *findPathAndInsert(
+			Node *node,
+			int suffix,
+			int beg,
+			int len
+			);
+
+		Node *GetRoot() {return root;}
+
+		void PrintNodeLabel(Node *n);
+		void PrintSegment(int beg, int len);
 };
 
 }

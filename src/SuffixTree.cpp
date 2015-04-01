@@ -12,7 +12,9 @@ Tree::Tree(
 {
 	nextNodeId = input.length();
 	root = new Node(assignId(), nullptr, 0, 0);
+}
 
+void Tree::Build() {
 	Node *n = root;
 	for (int i = 0; i < input.length(); i++) {
 		n = insertSuffix(n, i);
@@ -27,13 +29,31 @@ Tree::findPathAndInsert(
 	int len
 	)
 {
+	printf("= findPathAndInsert: ");
+	PrintSegment(beg, len);
+
 	Node *child = getChildByLabelBeginning(node, input[beg]);
 
 	// No child by that label
 	if (child == nullptr) {
 		Node *nchild = new Node(assignId(), node, beg, len);
+		addChildToNode(node, nchild);
+		return nchild;
 	}
-	panic("not finished");
+
+	for (int i = 1; i < len; i++) {
+		if (i >= child->len) {
+			return findPathAndInsert(child, suffix, beg + i, len - i);
+		}
+		if (input[beg + i] != input[child->beg + i]) {
+			// SPLIT
+			Node *mid = breakEdge(child, i);
+			printf("= splitting:\n");
+			PrintNodeLabel(mid);
+			return findPathAndInsert(mid, suffix, (beg + i) - 1, (len - i) + 1);
+		}
+	}
+
 	return nullptr;
 }
 
@@ -131,6 +151,7 @@ Tree::breakEdge(
 	int i
 	)
 {
+	printf("= breakEdge(%d)\n", i);
 	Node *parent, *newNode;
 
 	parent = n->parent;
@@ -240,6 +261,17 @@ void Tree::replaceChild(Node *parent, Node *node) {
 		prev = cur;
 		cur = cur->sibling;
 	}
+}
+
+void Tree::PrintNodeLabel(Node *n) {
+	PrintSegment(n->beg, n->len);
+}
+
+void Tree::PrintSegment(int beg, int len) {
+	for (int i = 0; i < len; i++) {
+		printf("%c", input[beg + i]);
+	}
+	printf("\n");
 }
 
 }

@@ -16,7 +16,6 @@ class Node {
 
 		void AddChild(Node *node);
 
-	private:
 		Node *parent;
 		Node *child;
 		Node *sibling;
