@@ -52,7 +52,16 @@ int TestBreakEdgeBasic() {
 	return PASS;
 }
 
+int TestBuildBanana() {
+	std::string s = "banana";
+	Tree *t = new Tree(s, "");
+	t->Build();
+
+	return PASS;
+}
+
 int main(void) {
 	RunTest(TestBreakEdgeBasic);
 	RunTest(TestFindPathAndInsertBasic);
+	RunTest(TestBuildBanana);
 }
