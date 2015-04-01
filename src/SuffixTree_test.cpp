@@ -30,12 +30,8 @@ int TestFindPathAndInsertBasic() {
 	Node *c_a = t->findPathAndInsert(t->GetRoot(), 0, 2, 5);
 	Node *c_b = t->findPathAndInsert(t->GetRoot(), 0, 4, 3);
 
-	printf("a label:\n");
-	t->PrintNodeLabel(c_a);
-	printf("b label:\n");
-	t->PrintNodeLabel(c_b);
-
 	Assert(c_a->len == 3, "Child has bad length: %d != %d", 3, c_a->len);
+	Assert(s[c_a->beg] == 'n', "Wrong beginning index for c_a");
 
 	return PASS;
 }

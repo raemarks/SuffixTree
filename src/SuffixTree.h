@@ -6,7 +6,14 @@
 #include "SuffixTreeNode.h"
 
 #define panic(x) \
-	printf(x); exit(1);
+	printf("%s:%d " x "\n", __FILE__, __LINE__); exit(1);
+
+#ifdef DEBUG
+	#define TRACE(x, ...) \
+		fprintf(stderr, "%s:%d\t%s\n", __FILE__, __LINE__, x, __VA_ARGS__);
+#else 
+	#define TRACE(x)
+#endif
 
 namespace suffixtree
 {

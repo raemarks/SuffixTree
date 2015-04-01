@@ -59,7 +59,7 @@ Tree::findPathAndInsert(
 		}
 	}
 
-	return nullptr;
+	panic("shouldnt actually happen");
 }
 
 bool
