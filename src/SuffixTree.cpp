@@ -25,9 +25,6 @@ void Tree::Build() {
 	Node *n = root;
 	for (int i = 0; i < input.length(); i++) {
 		n = insertSuffix(n, i);
-		std::cout << "Tree after inserting suffix " << i << std::endl;
-		PrintTree();
-		std::cout << std::endl;
 	}
 }
 
@@ -39,11 +36,13 @@ Tree::findPathAndInsert(
 	int len
 	)
 {
+	/*
 	printf("= findPathAndInsert: ");
 	PrintSegment(beg, len);
 	printf(" -> ");
 	PrintNodeLabel(node);
 	printf("\n");
+	*/
 
 	if (len == 0) {
 		printf("len is zero. why?\n");
@@ -66,9 +65,9 @@ Tree::findPathAndInsert(
 		if (input[beg + i] != input[child->beg + i]) {
 			// SPLIT
 			Node *mid = breakEdge(child, i);
-			printf("= splitting: ");
-			PrintNodeLabel(mid);
-			printf("\n");
+			//printf("= splitting: ");
+			//PrintNodeLabel(mid);
+			//printf("\n");
 			return findPathAndInsert(mid, suffix, (beg + i), (len - i));
 		}
 	}
@@ -180,7 +179,7 @@ Tree::breakEdge(
 	int i
 	)
 {
-	printf("= breakEdge(%d)\n", i);
+	//printf("= breakEdge(%d)\n", i);
 	Node *parent = nullptr, *newNode = nullptr;
 
 	parent = n->parent;
@@ -318,7 +317,6 @@ void Tree::recursiveEnumerateBWT(
 {
 	//Must be a leaf node.
 	if (n->child == nullptr) {
-		std::cout << "Leaf node, id = " << n->id << "char = " << input[n->id - 1] <<  std::endl;
 		if (n->id == 0) {
 			B[B_i++] = input[input.length() - 1];
 		} else {
@@ -337,9 +335,11 @@ void Tree::recursiveEnumerateBWT(
 void Tree::EnumerateBWT()
 {
 	recursiveEnumerateBWT(root);
+	/*
 	for (auto v : B) {
 		std::cout << v << std::endl;
 	}
+	*/
 }
 
 void Tree::PrintTree() {

@@ -64,12 +64,16 @@ int TestBuildBanana() {
 	t->Build();
 	t->EnumerateBWT();
 
-	t->PrintTree();
+	char expected[] = "annb$aa";
+	for (int i = 0; i < t->B.size(); i++) {
+		Assert(t->B[i] == expected[i], "BWT index %d was wrong.", i);
+	}
+
 	return PASS;
 }
 
 int main(void) {
-	//RunTest(TestBreakEdgeBasic);
-	//RunTest(TestFindPathAndInsertBasic);
+	RunTest(TestBreakEdgeBasic);
+	RunTest(TestFindPathAndInsertBasic);
 	RunTest(TestBuildBanana);
 }
