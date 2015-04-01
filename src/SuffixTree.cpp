@@ -335,11 +335,9 @@ void Tree::recursiveEnumerateBWT(
 void Tree::EnumerateBWT()
 {
 	recursiveEnumerateBWT(root);
-	/*
 	for (auto v : B) {
 		std::cout << v << std::endl;
 	}
-	*/
 }
 
 void Tree::PrintTree() {

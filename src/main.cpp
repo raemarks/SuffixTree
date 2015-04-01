@@ -26,8 +26,10 @@ int main(int argc, char *argv[])
 	std::string name, input;
 	ReadInputFasta(in, input, name);
 
+	/*
 	std::cout << "Name: " << name << std::endl;
 	std::cout << "Input: " << input << std::endl;
+	*/
 
 	suffixtree::Tree *t = new suffixtree::Tree(input, "");
 
