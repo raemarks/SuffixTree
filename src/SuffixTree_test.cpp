@@ -69,7 +69,7 @@ int TestBuildBanana() {
 }
 
 int main(void) {
-	RunTest(TestBreakEdgeBasic);
-	RunTest(TestFindPathAndInsertBasic);
+	//RunTest(TestBreakEdgeBasic);
+	//RunTest(TestFindPathAndInsertBasic);
 	RunTest(TestBuildBanana);
 }

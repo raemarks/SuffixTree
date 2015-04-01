@@ -37,6 +37,13 @@ Tree::findPathAndInsert(
 {
 	printf("= findPathAndInsert: ");
 	PrintSegment(beg, len);
+	printf(" -> ");
+	PrintNodeLabel(node);
+	printf("\n");
+
+	if (len == 0) {
+		printf("len is zero. why?\n");
+	}
 
 	Node *child = getChildByLabelBeginning(node, input[beg]);
 
@@ -44,6 +51,7 @@ Tree::findPathAndInsert(
 	if (child == nullptr) {
 		Node *nchild = new Node(suffix, node, beg, len);
 		addChildToNode(node, nchild);
+
 		return nchild;
 	}
 
@@ -56,6 +64,7 @@ Tree::findPathAndInsert(
 			Node *mid = breakEdge(child, i);
 			printf("= splitting: ");
 			PrintNodeLabel(mid);
+			printf("\n");
 			return findPathAndInsert(mid, suffix, (beg + i), (len - i));
 		}
 	}
@@ -164,7 +173,7 @@ Tree::breakEdge(
 	)
 {
 	printf("= breakEdge(%d)\n", i);
-	Node *parent, *newNode;
+	Node *parent = nullptr, *newNode = nullptr;
 
 	parent = n->parent;
 
@@ -172,6 +181,9 @@ Tree::breakEdge(
 	newNode = new Node(assignId(), parent, n->beg, i);
 	//Remove n from parent's children, replace with new node.
 	replaceChild(parent, newNode);
+
+	n->sibling = nullptr;
+
 	//Insert n under new node
 	addChildToNode(newNode, n);
 
@@ -334,11 +346,13 @@ void writeTabs(int n) {
 
 void Tree::printTreeRec(Node *nd, int depth) {
 	writeTabs(depth);
+	printf("[");
 	PrintNodeLabel(nd);
+	printf("]");
 	printf("{");
 	
 	Node *cur = nd->child;
-	if (nd != nullptr) {
+	if (cur != nullptr) {
 		printf("\n");
 	}
 
@@ -346,7 +360,9 @@ void Tree::printTreeRec(Node *nd, int depth) {
 		printTreeRec(cur, depth + 1);
 		cur = cur->sibling;
 	}
-	writeTabs(depth);
+	if (nd->child != nullptr) {
+		writeTabs(depth);
+	}
 	printf("}\n");
 }
 
