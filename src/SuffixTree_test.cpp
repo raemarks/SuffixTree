@@ -56,6 +56,7 @@ int TestBuildBanana() {
 	std::string s = "banana";
 	Tree *t = new Tree(s, "");
 	t->Build();
+	t->EnumerateBWT();
 
 	return PASS;
 }

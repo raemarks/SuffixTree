@@ -17,6 +17,7 @@ Tree::Tree(
 	input += '$';
 	nextNodeId = input.length();
 	root = new Node(assignId(), nullptr, 0, 0);
+	root->suffixLink = root;
 }
 
 void Tree::Build() {
@@ -84,7 +85,11 @@ Tree::insertSuffix(
 	)
 {
 	Node *u = prevLeaf->parent;
-	if (u->suffixLink != nullptr) {
+
+	if (prevLeaf == root) {
+		return findPathAndInsert(root, suffix, 0, input.length());
+
+	} else if (u->suffixLink != nullptr) {
 		//Case 1: u already existed at the start of iteration (suffix-1).
 		Node *v = u->suffixLink;
 		//u->stringDepth is equivalent to the length of alpha

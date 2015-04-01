@@ -2,7 +2,7 @@ CC=g++
 SRC_DIR=src
 OBJ_DIR=obj
 
-CFLAGS=--std=c++11 -g -O2
+CFLAGS=--std=c++11 -g
 
 SOURCES=src/SuffixTree.cpp src/SuffixTreeNode.cpp src/io.cpp
 MAIN=src/main.cpp
