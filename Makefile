@@ -2,8 +2,9 @@ CC=g++
 SRC_DIR=src
 OBJ_DIR=obj
 
-CFLAGS=--std=c++11 -g
+CFLAGS=--std=c++11 -g #-O3 -march=native
 
+LIBS=-lprofiler
 SOURCES=src/SuffixTree.cpp src/SuffixTreeNode.cpp src/io.cpp
 MAIN=src/main.cpp
 TEST_MAIN=src/SuffixTree_test.cpp
@@ -13,7 +14,7 @@ OBJECTS=$(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SOURCES))
 OUTPUT=suffix
 
 all: $(OBJECTS)
-	$(CC) $(OBJECTS) $(MAIN) $(CFLAGS) -o $(OUTPUT)
+	$(CC) $(OBJECTS) $(MAIN) $(LIBS) $(CFLAGS) -o $(OUTPUT)
 
 test: $(OBJECTS)
 	$(CC) $(OBJECTS) $(TEST_MAIN) $(CFLAGS) -o $(TEST_OUTPUT)

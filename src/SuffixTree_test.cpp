@@ -82,16 +82,6 @@ int TestBuildMississippi() {
 	return PASS;
 }
 
-int TestBuildMississippi() {
-	std::string s = "mississippi";
-	Tree *t = new Tree(s, "");
-	t->Build();
-	t->EnumerateBWT();
-
-	t->PrintTree();
-	return PASS;
-}
-
 int main(void) {
 	RunTest(TestBreakEdgeBasic);
 	RunTest(TestFindPathAndInsertBasic);

@@ -21,8 +21,12 @@ namespace suffixtree
 class Tree
 {
 	private:
+		Node *alloc_buf;
+		int alloc_i;
+
 		Node *root;
 		std::string alphabet;
+		int alphabetSize;
 		std::string& input;
 		int nextNodeId;
 		int printCount;
@@ -74,6 +78,8 @@ class Tree
 		void recursiveEnumerateBWT(
 			Node *n
 			);
+
+		Node *newNode(int id, Node *parent, int beg, int len);
 	public:
 		std::vector<char> B;
 

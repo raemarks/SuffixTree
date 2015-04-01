@@ -16,8 +16,9 @@ Tree::Tree(
 
 {
 	input += '$';
+
 	nextNodeId = input.length();
-	root = new Node(assignId(), nullptr, 0, 0);
+	root = newNode(assignId(), nullptr, 0, 0);
 	root->suffixLink = root;
 }
 
@@ -52,7 +53,7 @@ Tree::findPathAndInsert(
 
 	// No child by that label
 	if (child == nullptr) {
-		Node *nchild = new Node(suffix, node, beg, len);
+		Node *nchild = newNode(suffix, node, beg, len);
 		addChildToNode(node, nchild);
 
 		return nchild;
@@ -180,26 +181,26 @@ Tree::breakEdge(
 	)
 {
 	//printf("= breakEdge(%d)\n", i);
-	Node *parent = nullptr, *newNode = nullptr;
+	Node *parent = nullptr, *nNode = nullptr;
 
 	parent = n->parent;
 
 	//Make new node
-	newNode = new Node(assignId(), parent, n->beg, i);
+	nNode = newNode(assignId(), parent, n->beg, i);
 	//Remove n from parent's children, replace with new node.
-	replaceChild(parent, newNode);
+	replaceChild(parent, nNode);
 
 	n->sibling = nullptr;
 
 	//Insert n under new node
-	addChildToNode(newNode, n);
+	addChildToNode(nNode, n);
 
 	//Alter n
 	n->beg = n->beg + i;
-	n->parent = newNode;
+	n->parent = nNode;
 	n->len = n->len - i;
 
-	return newNode;
+	return nNode;
 }
 
 Node *
@@ -209,7 +210,6 @@ Tree::getChildByLabelBeginning(
 	)
 {
 	Node *cur = n->child;
-
 	while (cur != nullptr)
 	{
 		if (input[cur->beg] == c)
@@ -338,6 +338,7 @@ void Tree::EnumerateBWT()
 	for (auto v : B) {
 		std::cout << v << std::endl;
 	}
+	//printf("NNODES = %d\n", assignId());
 }
 
 void Tree::PrintTree() {
@@ -399,6 +400,18 @@ void Tree::PrintSegment(int beg, int len) {
 	for (int i = 0; i < len; i++) {
 		printf("%c", input[beg + i]);
 	}
+}
+
+Node *Tree::newNode(int id, Node *parent, int beg, int len) {
+	Node *nxt = &alloc_buf[alloc_i++];
+	nxt->id = id;
+	nxt->parent = parent;
+	nxt->beg = beg;
+	nxt->len = len;
+	if (parent != nullptr) {
+		nxt->stringDepth = parent->stringDepth + len;
+	}
+	return nxt;
 }
 
 }

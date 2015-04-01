@@ -20,16 +20,17 @@ ReadInputFasta(
 	std::string& name
 	)
 {
-	char buf[MB], _name[MB/2], c = '\0';
+	int BUFSIZE = 4 * MB;
+	char buf[BUFSIZE], _name[MB/2], c = '\0';
 	int i = 0;
-	memset(buf, 0, MB);
+	memset(buf, 0, BUFSIZE);
 
 	// Skip over '>'
 	while (c != '>' && !in.eof()) {
 		in >> c;
 	}
 
-	in.getline(buf, MB);
+	in.getline(buf, BUFSIZE);
 	// Get unique identifier of sequence, up to first whitespace
 	sscanf(buf, "%s", _name);
 	// Allocate and copy
@@ -37,7 +38,7 @@ ReadInputFasta(
 
 	i = 0;
 	c = '\0';
-	memset(buf, 0, MB);
+	memset(buf, 0, BUFSIZE);
 
 	in >> c;
 	while (c != '>' && !in.eof()) {
