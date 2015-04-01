@@ -12,9 +12,7 @@ Node::Node(
 	beg(beg),
 	len(len),
 	parent(parent),
-	suffixLink(nullptr),
-	child(nullptr),
-	sibling(nullptr)
+	suffixLink(nullptr)
 {
 	if (parent != nullptr) {
 		stringDepth = parent->stringDepth + len;

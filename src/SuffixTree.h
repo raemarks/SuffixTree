@@ -5,8 +5,8 @@
 
 #include "SuffixTreeNode.h"
 
-#define panic(x) \
-	printf("%s:%d " x "\n", __FILE__, __LINE__); exit(1);
+#define panic(x, ...) \
+	printf("%s:%d " x "\n", __FILE__, __LINE__, ##__VA_ARGS__); exit(1);
 
 #ifdef DEBUG
 	#define TRACE(x, ...) \

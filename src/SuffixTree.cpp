@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+char table[256];
+
 namespace suffixtree
 {
 
@@ -18,13 +20,15 @@ Tree::Tree(
 {
 	input += '$';
 
-size_t size = sizeof(Node) * input.length() * 2;
-       alloc_buf = (Node*)malloc(size);
-       bzero(alloc_buf, size);
+	size_t size = sizeof(Node) * input.length() * 2;
+	alloc_buf = (Node*)malloc(size);
+	bzero(alloc_buf, size);
 
+	for (int i = 0; i < alphabet.length(); i++) {
+		table[alphabet[i]] = i;
+	}
 
-       alloc_i = 0;
-
+	alloc_i = 0;
 
 	nextNodeId = input.length();
 	root = newNode(assignId(), nullptr, 0, 0);
@@ -199,33 +203,24 @@ Tree::breakEdge(
 	//Remove n from parent's children, replace with new node.
 	replaceChild(parent, nNode);
 
-	n->sibling = nullptr;
-
-	//Insert n under new node
-	addChildToNode(nNode, n);
-
 	//Alter n
 	n->beg = n->beg + i;
 	n->parent = nNode;
 	n->len = n->len - i;
 
+	//Insert n under new node
+	addChildToNode(nNode, n);
+
 	return nNode;
 }
 
-Node *
+inline Node *
 Tree::getChildByLabelBeginning(
 	Node *n,
 	char c
 	)
 {
-	Node *cur = n->child;
-	while (cur != nullptr)
-	{
-		if (input[cur->beg] == c)
-			return cur;
-		cur = cur->sibling;
-	}
-	return cur;
+	return n->table[table[c]];
 }
 
 void 
@@ -234,39 +229,8 @@ Tree::addChildToNode(
 	Node *child
 	)
 {
-	Node *cur = parent->child;
-	if (cur == nullptr) {
-		parent->child = child;
-		return;
-	}
-
 	char k = input[child->beg];
-	if (k == '$') {
-		if (cur != nullptr && input[cur->beg] == '$') {
-			panic("shouldnt already have child with this label");
-		}
-
-		child->sibling = cur;
-		parent->child = child;
-		return;
-	}
-
-	Node *prev = nullptr;
-	while(cur != nullptr) {
-		if (k < input[cur->beg]) {
-			child->sibling = cur;
-			if (prev == nullptr) {
-				parent->child = child;
-			} else {
-				prev->sibling = child;
-			}
-			return;
-		}
-
-		prev = cur;
-		cur = cur->sibling;
-	}
-	prev->sibling = child;
+	parent->table[table[k]] = child;
 }
 
 void
@@ -274,16 +238,17 @@ Tree::DisplayChildren(
 	Node *node
 	)
 {
-	Node *child = node->child;
+	Node *child = nullptr;
 
-	while (child != nullptr) {
-		std::cout << "Node id: " << child->id << "Edge lable: '";
-		for (int i = child->beg; i < child->len + child->beg; i++) {
-			std::cout << input[i];
+	for (int i = 0; i < 5; i++) {
+		child = node->table[i];
+		if (child != nullptr) {
+			std::cout << "Node id: " << child->id << "Edge lable: '";
+			for (int i = child->beg; i < child->len + child->beg; i++) {
+				std::cout << input[i];
+			}
+			std::cout << "'" << std::endl;
 		}
-		std::cout << "'" << std::endl;
-
-		child = child->sibling;
 	}
 }
 
@@ -312,11 +277,11 @@ Tree::recursiveEnumerateNodesDFS(
 		std::cout << " ";
 
 	printCount++;
-	Node *child = n->child;
 
-	while (child != nullptr) {
-		recursiveEnumerateNodesDFS(child);
-		child = child->sibling;
+	for (int i = 0; i < 5; i++) {
+		if (n->table[i] != nullptr) {
+			recursiveEnumerateNodesDFS(n->table[i]);
+		}
 	}
 }
 
@@ -325,7 +290,7 @@ void Tree::recursiveEnumerateBWT(
 	)
 {
 	//Must be a leaf node.
-	if (n->child == nullptr) {
+	if (n->id < input.length()) {
 		if (n->id == 0) {
 			B[B_i++] = input[input.length() - 1];
 		} else {
@@ -334,10 +299,10 @@ void Tree::recursiveEnumerateBWT(
 		return;
 	}
 
-	Node *child = n->child;
-	while (child != nullptr) {
-		recursiveEnumerateBWT(child);
-		child = child->sibling;
+	for (int i = 0; i < 5; i++) {
+		if (n->table[i] != nullptr) {
+			recursiveEnumerateBWT(n->table[i]);
+		}
 	}
 }
 
@@ -345,7 +310,7 @@ void Tree::EnumerateBWT()
 {
 	recursiveEnumerateBWT(root);
 	for (auto v : B) {
-		std::cout << v << std::endl;
+		//std::cout << v << std::endl;
 	}
 	//printf("NNODES = %d\n", assignId());
 }
@@ -359,46 +324,24 @@ void writeTabs(int n) {
 }
 
 void Tree::printTreeRec(Node *nd, int depth) {
+	if (nd == nullptr) return;
+
 	writeTabs(depth);
 	printf("[");
 	PrintNodeLabel(nd);
 	printf("]");
-	printf("{");
+	printf("{\n");
 	
-	Node *cur = nd->child;
-	if (cur != nullptr) {
-		printf("\n");
+	for (int i = 0; i < 5; i++) {
+		printTreeRec(nd->table[i], depth + 1);
 	}
-
-	while(cur != nullptr) {
-		printTreeRec(cur, depth + 1);
-		cur = cur->sibling;
-	}
-	if (nd->child != nullptr) {
-		writeTabs(depth);
-	}
+	writeTabs(depth);
 	printf("}\n");
 }
 
 void Tree::replaceChild(Node *parent, Node *node) {
-	Node *prev = nullptr;
-	Node *cur = parent->child;
 	char k = input[node->beg];
-
-	while (cur != nullptr) {
-		if (k == input[cur->beg]) {
-			node->sibling = cur->sibling;
-			if (prev == nullptr) {
-				parent->child = node;
-			} else {
-				prev->sibling = node;
-			}
-			return;
-		}
-
-		prev = cur;
-		cur = cur->sibling;
-	}
+	parent->table[table[k]] = node;
 }
 
 void Tree::PrintNodeLabel(Node *n) {

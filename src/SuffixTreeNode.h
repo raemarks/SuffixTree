@@ -17,8 +17,6 @@ class Node {
 		void AddChild(Node *node);
 
 		Node *parent;
-		Node *child;
-		Node *sibling;
 
 		Node *suffixLink;
 

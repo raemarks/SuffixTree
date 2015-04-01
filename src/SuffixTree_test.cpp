@@ -72,6 +72,20 @@ int TestBuildBanana() {
 	return PASS;
 }
 
+int TestBuildGatata() {
+	std::string s = "GATATA";
+	Tree *t = new Tree(s, "$AGTC");
+	t->Build();
+	t->EnumerateBWT();
+
+	char expected[] = "ATTG$AA";
+	for (int i = 0; i < t->B.size(); i++) {
+		Assert(t->B[i] == expected[i], "BWT index %d was wrong.", i);
+	}
+
+	return PASS;
+}
+
 int TestBuildMississippi() {
 	std::string s = "mississippi";
 	Tree *t = new Tree(s, "");
@@ -84,7 +98,8 @@ int TestBuildMississippi() {
 
 int main(void) {
 	RunTest(TestBreakEdgeBasic);
-	RunTest(TestFindPathAndInsertBasic);
-	RunTest(TestBuildBanana);
-	RunTest(TestBuildMississippi);
+	//RunTest(TestFindPathAndInsertBasic);
+	//RunTest(TestBuildBanana);
+	RunTest(TestBuildGatata);
+	//RunTest(TestBuildMississippi);
 }
