@@ -11,7 +11,8 @@ Tree::Tree(
 	):
 	input(input),
 	alphabet(alphabet),
-	B(input.length(), 0)
+	B(input.length() + 1, 0),
+	B_i(0)
 
 {
 	input += '$';
@@ -317,13 +318,11 @@ void Tree::recursiveEnumerateBWT(
 {
 	//Must be a leaf node.
 	if (n->child == nullptr) {
-		std::cout << "Leaf node, id = " << n->id << "char = " << input[n->beg] <<  std::endl;
-		if (n->id == input.length()-1) {
-			//Set index at beginning of array
-			B[0] = input[n->id];
-
+		std::cout << "Leaf node, id = " << n->id << "char = " << input[n->id - 1] <<  std::endl;
+		if (n->id == 0) {
+			B[B_i++] = input[input.length() - 1];
 		} else {
-			B[n->id+1] = input[n->id];
+			B[B_i++] = input[n->id - 1];
 		}
 		return;
 	}
@@ -338,8 +337,8 @@ void Tree::recursiveEnumerateBWT(
 void Tree::EnumerateBWT()
 {
 	recursiveEnumerateBWT(root);
-	for (auto it = B.begin(); it != B.end(); ++it) {
-		std::cout << *it << std::endl;
+	for (auto v : B) {
+		std::cout << v << std::endl;
 	}
 }
 

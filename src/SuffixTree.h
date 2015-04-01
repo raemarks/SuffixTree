@@ -27,6 +27,7 @@ class Tree
 		int nextNodeId;
 		int printCount;
 		std::vector<char> B;
+		int B_i;
 
 		//Inserts a suffix into the tree and returns a pointer to the newly
 		//created leaf node representing that suffix.
