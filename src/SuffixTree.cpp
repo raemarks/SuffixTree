@@ -74,6 +74,15 @@ Tree::insertSuffix(
 
 	} else {
 		//Case 2B: u was created during iteration (suffix-1), and u' is the root
+		Node *uprime = u->parent; // root
+		Node *vprime = uprime->suffixLink; // also the root
+		int betaprime = u->beg + 1; // beta = x betaprime
+		int betaprimelen = u->len - 1;
+
+		Node *v = nodeHopToV(vprime, betaprim, betaprimelen);
+
+		return findPathAndInsert(v, suffix, suffix + v->stringDepth,
+			input.length() - suffix - v->stringDepth);
 	}
 }
 
