@@ -27,11 +27,17 @@ int TestFindPathAndInsertBasic() {
 	Assert(nchild->len == 7, "Child has incorrect length");
 
 	// Now some splitting
+	// insert "nana$"
 	Node *c_a = t->findPathAndInsert(t->GetRoot(), 0, 2, 5);
+
+	// insert "na$"
 	Node *c_b = t->findPathAndInsert(t->GetRoot(), 0, 4, 3);
 
 	Assert(c_a->len == 3, "Child has bad length: %d != %d", 3, c_a->len);
 	Assert(s[c_a->beg] == 'n', "Wrong beginning index for c_a");
+
+	Assert(c_b->len == 1, "Child has bad length: %d != %d", 1, c_b->len);
+	Assert(s[c_b->beg] == '$', "Wrong char for node");
 
 	return PASS;
 }
@@ -58,6 +64,7 @@ int TestBuildBanana() {
 	t->Build();
 	t->EnumerateBWT();
 
+	t->PrintTree();
 	return PASS;
 }
 

@@ -109,6 +109,8 @@ class Tree
 
 		void PrintNodeLabel(Node *n);
 		void PrintSegment(int beg, int len);
+		void printTreeRec(Node *nd, int depth);
+		void PrintTree();
 };
 
 }

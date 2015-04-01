@@ -42,7 +42,7 @@ Tree::findPathAndInsert(
 
 	// No child by that label
 	if (child == nullptr) {
-		Node *nchild = new Node(assignId(), node, beg, len);
+		Node *nchild = new Node(suffix, node, beg, len);
 		addChildToNode(node, nchild);
 		return nchild;
 	}
@@ -295,7 +295,8 @@ void Tree::recursiveEnumerateBWT(
 	)
 {
 	//Must be a leaf node.
-	if (n->id < input.length()) {
+	if (n->child == nullptr) {
+		std::cout << "Leaf node, id = " << n->id << "char = " << input[n->beg] <<  std::endl;
 		if (n->id == input.length()-1) {
 			//Set index at beginning of array
 			B[0] = input[n->id];
@@ -303,10 +304,10 @@ void Tree::recursiveEnumerateBWT(
 		} else {
 			B[n->id+1] = input[n->id];
 		}
+		return;
 	}
 
 	Node *child = n->child;
-
 	while (child != nullptr) {
 		recursiveEnumerateBWT(child);
 		child = child->sibling;
@@ -319,6 +320,32 @@ void Tree::EnumerateBWT()
 	for (auto it = B.begin(); it != B.end(); ++it) {
 		std::cout << *it << std::endl;
 	}
+}
+
+void Tree::PrintTree() {
+	printTreeRec(root, 0);
+}
+
+void writeTabs(int n) {
+	for (int i = 0; i < n; i++) {printf("+");}
+}
+
+void Tree::printTreeRec(Node *nd, int depth) {
+	writeTabs(depth);
+	PrintNodeLabel(nd);
+	printf("{");
+	
+	Node *cur = nd->child;
+	if (nd != nullptr) {
+		printf("\n");
+	}
+
+	while(cur != nullptr) {
+		printTreeRec(cur, depth + 1);
+		cur = cur->sibling;
+	}
+	writeTabs(depth);
+	printf("}\n");
 }
 
 void Tree::replaceChild(Node *parent, Node *node) {
@@ -350,7 +377,6 @@ void Tree::PrintSegment(int beg, int len) {
 	for (int i = 0; i < len; i++) {
 		printf("%c", input[beg + i]);
 	}
-	printf("\n");
 }
 
 }
