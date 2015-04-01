@@ -1,4 +1,5 @@
 #include "SuffixTree.h"
+#include <strings.h>
 
 #include <iostream>
 
@@ -16,6 +17,14 @@ Tree::Tree(
 
 {
 	input += '$';
+
+size_t size = sizeof(Node) * input.length() * 2;
+       alloc_buf = (Node*)malloc(size);
+       bzero(alloc_buf, size);
+
+
+       alloc_i = 0;
+
 
 	nextNodeId = input.length();
 	root = newNode(assignId(), nullptr, 0, 0);
