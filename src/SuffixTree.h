@@ -18,6 +18,8 @@ class Tree
 		std::string alphabet;
 		std::string& input;
 		int nextNodeId;
+		int printCount;
+		std::vector<int> B;
 
 		//Inserts a suffix into the tree and returns a pointer to the newly
 		//created leaf node representing that suffix.
@@ -47,12 +49,6 @@ class Tree
 			char c
 			);
 
-		// i is the index before which to break the edge of Node n and create
-		// another internal node..
-		Node *breakEdge(
-			Node *n,
-			int i
-			);
 
 		void addChildToNode(
 			Node *parent,
@@ -64,10 +60,24 @@ class Tree
 			Node *newChild
 			);
 
+		void recursiveEnumerateNodesDFS(
+			Node *n
+			);
+
+		void recursiveEnumerateBWT(
+			Node *n
+			);
 	public:
 		Tree(
 			std::string& input,
 			std::string alphabet
+			);
+
+		// i is the index before which to break the edge of Node n and create
+		// another internal node..
+		Node *breakEdge(
+			Node *n,
+			int i
 			);
 
 		void Build();
@@ -85,6 +95,8 @@ class Tree
 			int beg,
 			int len
 			);
+
+		void EnumerateBWT();
 
 		Node *GetRoot() {return root;}
 

@@ -1,5 +1,7 @@
 #include "SuffixTree.h"
 
+#include <iostream>
+
 namespace suffixtree
 {
 
@@ -8,8 +10,11 @@ Tree::Tree(
 	std::string alphabet
 	):
 	input(input),
-	alphabet(alphabet)
+	alphabet(alphabet),
+	B(input.length(), 0)
+
 {
+	input += '$';
 	nextNodeId = input.length();
 	root = new Node(assignId(), nullptr, 0, 0);
 }
@@ -160,11 +165,11 @@ Tree::breakEdge(
 	newNode = new Node(assignId(), parent, n->beg, i);
 	//Remove n from parent's children, replace with new node.
 	replaceChild(parent, newNode);
-
 	//Insert n under new node
 	addChildToNode(newNode, n);
 
 	//Alter n
+	n->beg = n->beg + i;
 	n->parent = newNode;
 	n->len = n->len - i;
 
@@ -239,6 +244,47 @@ Tree::DisplayChildren(
 
 void
 Tree::EnumerateNodesDFS()
+{
+	printCount = 0;
+	recursiveEnumerateNodesDFS(root);
+	printCount = 0;
+}
+
+void
+Tree::recursiveEnumerateNodesDFS(
+	Node *n
+	)
+{
+	//After 10 enumerations, print a newline
+	if (printCount == 10) {
+		std::cout << std::endl;
+		printCount = 0;
+	}
+
+	std::cout << n->stringDepth;
+
+	if (printCount != 9)
+		std::cout << " ";
+
+	printCount++;
+	Node *child = n->child;
+
+	while (child != nullptr) {
+		recursiveEnumerateNodesDFS(child);
+		child = child->sibling;
+	}
+}
+
+void Tree::recursiveEnumerateBWT(
+	Node *n
+	)
+{
+	//Must be a leaf node.
+	if (n->id < input.length()) {
+	}
+}
+
+void Tree::EnumerateBWT()
 {
 }
 

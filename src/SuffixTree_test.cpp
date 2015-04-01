@@ -37,12 +37,26 @@ int TestFindPathAndInsertBasic() {
 
 	Assert(c_a->len == 2, "Child has bad length: %d != %d", 2, c_a->len);
 
-	
+	return PASS;
+}
 
+int TestBreakEdgeBasic() {
+	std::string s = "nana$";
+	Tree *t = new Tree(s, "");
+	Node *parent = t->GetRoot();
+	Node *child = new Node(0, parent, 0, 5);
+
+	Node *v = t->breakEdge(child, 2);
+
+	Assert(v->beg == 0, "Middle node has wrong begin index");
+	Assert(v->len == 2, "Middle node has wrong length");
+	Assert(child->beg == 2, "Child node has wrong begin index");
+	Assert(child->len == 3, "Child node has wrong length");
 
 	return PASS;
 }
 
 int main(void) {
+	RunTest(TestBreakEdgeBasic);
 	RunTest(TestFindPathAndInsertBasic);
 }

@@ -22,9 +22,10 @@ class Node {
 
 		Node *suffixLink;
 
-		//Equivalent to the "edge label". Beg is the index of the first element
-		//of the substring described by the edge in the original input string.
-		//len is the length of the edge label and consequently the substring.
+		//Equivalent to the "edge label" from the parent node to this node.
+		//Beg is the index of the first element of the substring described by
+		//the edge in the original input string. len is the length of the edge
+		//label and consequently the substring.
 		int beg, len;
 
 		int id;
