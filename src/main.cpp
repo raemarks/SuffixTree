@@ -29,5 +29,8 @@ int main(int argc, char *argv[])
 	std::cout << "Name: " << name << std::endl;
 	std::cout << "Input: " << input << std::endl;
 
-//	suffixtree::Tree *t = new suffixtree::Tree(input, "");
+	suffixtree::Tree *t = new suffixtree::Tree(input, "");
+
+	t->Build();
+	t->EnumerateBWT();
 }
