@@ -4,7 +4,6 @@ OBJ_DIR=obj
 
 CFLAGS=--std=c++11 -g #-O3 -march=native
 
-LIBS=-lprofiler
 SOURCES=src/SuffixTree.cpp src/SuffixTreeNode.cpp src/io.cpp
 MAIN=src/main.cpp
 TEST_MAIN=src/SuffixTree_test.cpp

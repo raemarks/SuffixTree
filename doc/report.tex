@@ -1,0 +1,39 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\author{Raeanne Marks}
+\begin{document}
+\section{System Configuration}
+The CPU used is an Intel i7-4578 @3.0GHz. RAM is 8GB, and cache size is 4MB.
+\section{Construction Time}
+\begin{enumerate}
+\item String s1
+
+ 23 microseconds
+ 
+\item String s2
+
+ 24 microseconds
+ 
+\item Human BRCA2 gene
+
+ 177 microseconds
+ 
+\item Tomato's chloroplast genome
+
+ 1,720 microseconds
+ 
+\item Yeast's Chromosome 12
+
+11,370 microseconds
+\end{enumerate}
+\section{Justification}
+The performance statistics listed above certainly meet the expectations for performance. As the input size increased, the performance did as well. For example, for input 3, the base pair number to microsecond ratio was approximately 64. For input 4, the ratio was approximately 90, and for input 5, the ration was approximately 95. This demonstrates that as the input size increased, the number of base pairs processed per microsecond increased. Clearly, this suffix tree implementation operates in $O(n)$ time.
+\section{Implementation Constant}
+For every input byte, the suffix tree in theory uses 64 bytes. Each node in the tree is represented by a Node object, which contains four pointers (for navigation and siblings) and four integers (for node information) for a total of 32 bytes, and the number of node in the tree is bounded by $2n$, where $n$ is the number of bytes. In reality, when compiled in 32-bit mode with compiler optimization, the code ran with a peak memory usage of 335MB for the Human BRCA2 gene, which contains 11,382 base pairs and consequently bytes.
+\section{BWT Index}
+\section{Exact Matching Repeat}
+\end{document}

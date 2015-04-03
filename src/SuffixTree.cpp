@@ -18,13 +18,11 @@ Tree::Tree(
 {
 	input += '$';
 
-size_t size = sizeof(Node) * input.length() * 2;
-       alloc_buf = (Node*)malloc(size);
-       bzero(alloc_buf, size);
+	size_t size = sizeof(Node) * input.length() * 2;
+	alloc_buf = (Node*)malloc(size);
+	bzero(alloc_buf, size);
 
-
-       alloc_i = 0;
-
+	alloc_i = 0;
 
 	nextNodeId = input.length();
 	root = newNode(assignId(), nullptr, 0, 0);
@@ -36,6 +34,7 @@ void Tree::Build() {
 	for (int i = 0; i < input.length(); i++) {
 		n = insertSuffix(n, i);
 	}
+	DisplayChildren(root);
 }
 
 Node *
@@ -277,7 +276,7 @@ Tree::DisplayChildren(
 	Node *child = node->child;
 
 	while (child != nullptr) {
-		std::cout << "Node id: " << child->id << "Edge lable: '";
+		std::cout << "Node id: " << child->id << "Edge label: '";
 		for (int i = child->beg; i < child->len + child->beg; i++) {
 			std::cout << input[i];
 		}
@@ -290,8 +289,11 @@ Tree::DisplayChildren(
 void
 Tree::EnumerateNodesDFS()
 {
+	nLeaves = 0;
+	nIntNodes = 0;
 	printCount = 0;
 	recursiveEnumerateNodesDFS(root);
+	std::cout << std::endl;
 	printCount = 0;
 }
 
@@ -300,6 +302,13 @@ Tree::recursiveEnumerateNodesDFS(
 	Node *n
 	)
 {
+	if (n->child == nullptr) {
+		nLeaves++;
+	}
+	else {
+		nIntNodes++;
+	}
+
 	//After 10 enumerations, print a newline
 	if (printCount == 10) {
 		std::cout << std::endl;
@@ -421,6 +430,13 @@ Node *Tree::newNode(int id, Node *parent, int beg, int len) {
 		nxt->stringDepth = parent->stringDepth + len;
 	}
 	return nxt;
+}
+
+void
+Tree::PrintTreeInfo() {
+	std::cout << "Number of leaves: " << nLeaves << std::endl;
+	std::cout << "Number of internal nodes: " << nIntNodes << std::endl;
+	std::cout << "Total number of nodes: " << nLeaves + nIntNodes << std::endl;
 }
 
 }

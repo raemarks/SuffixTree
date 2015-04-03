@@ -32,6 +32,9 @@ class Tree
 		int printCount;
 		int B_i;
 
+		int nIntNodes;
+		int nLeaves;
+
 		//Inserts a suffix into the tree and returns a pointer to the newly
 		//created leaf node representing that suffix.
 		Node *insertSuffix(
@@ -119,6 +122,7 @@ class Tree
 		void PrintSegment(int beg, int len);
 		void printTreeRec(Node *nd, int depth);
 		void PrintTree();
+		void PrintTreeInfo();
 };
 
 }
