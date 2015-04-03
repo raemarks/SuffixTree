@@ -2,9 +2,9 @@ CC=g++
 SRC_DIR=src
 OBJ_DIR=obj
 
-CFLAGS=--std=c++11 -g # -O3 -march=native
+CFLAGS=--std=c++11 -march=native -O3
 
-LIBS=-lprofiler
+#LIBS=-lprofiler
 SOURCES=src/SuffixTree.cpp src/SuffixTreeNode.cpp src/io.cpp
 MAIN=src/main.cpp
 TEST_MAIN=src/SuffixTree_test.cpp

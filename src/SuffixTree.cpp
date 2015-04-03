@@ -21,6 +21,8 @@ Tree::Tree(
 	input += '$';
 
 	size_t size = sizeof(Node) * input.length() * 2;
+	printf("node size: %d\n", sizeof(Node));
+	printf("allocation size: %d\n", size);
 	alloc_buf = (Node*)malloc(size);
 	bzero(alloc_buf, size);
 
@@ -40,6 +42,7 @@ void Tree::Build() {
 	for (int i = 0; i < input.length(); i++) {
 		n = insertSuffix(n, i);
 	}
+	printf("allocated %d nodes, used %d.\n", input.length() * 2, alloc_i);
 }
 
 Node *
