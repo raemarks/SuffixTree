@@ -34,5 +34,8 @@ int main(int argc, char *argv[])
 	suffixtree::Tree *t = new suffixtree::Tree(input, "$ACGT");
 
 	t->Build();
-	t->EnumerateBWT();
+	//t->EnumerateNodesDFS();
+	t->PrintTreeInfo();
+	t->PrintLongestRepeatSeqInfo();
+	//t->EnumerateBWT();
 }

@@ -32,8 +32,11 @@ class Tree
 		int printCount;
 		int B_i;
 
+		//For tree statistics
+		bool ranDFS;
 		int nIntNodes;
 		int nLeaves;
+		Node *lowestIntNode;
 
 		//Inserts a suffix into the tree and returns a pointer to the newly
 		//created leaf node representing that suffix.
@@ -83,6 +86,7 @@ class Tree
 			);
 
 		Node *newNode(int id, Node *parent, int beg, int len);
+
 	public:
 		std::vector<char> B;
 
@@ -118,6 +122,7 @@ class Tree
 
 		Node *GetRoot() {return root;}
 
+		void PrintLongestRepeatSeqInfo();
 		void PrintNodeLabel(Node *n);
 		void PrintSegment(int beg, int len);
 		void printTreeRec(Node *nd, int depth);
