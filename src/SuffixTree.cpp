@@ -13,8 +13,10 @@ Tree::Tree(
 	input(input),
 	alphabet(alphabet),
 	B(input.length() + 1, 0),
-	B_i(0)
-
+	B_i(0),
+	ranDFS(false),
+	nIntNodes(1),
+	nLeaves(0)
 {
 	input += '$';
 
@@ -26,6 +28,7 @@ Tree::Tree(
 
 	nextNodeId = input.length();
 	root = newNode(assignId(), nullptr, 0, 0);
+	lowestIntNode = root;
 	root->suffixLink = root;
 }
 
@@ -106,6 +109,8 @@ Tree::insertSuffix(
 	)
 {
 	Node *u = prevLeaf->parent;
+
+	nLeaves++;
 
 	if (prevLeaf == root) {
 		return findPathAndInsert(root, suffix, 0, input.length());
@@ -208,6 +213,13 @@ Tree::breakEdge(
 	n->parent = nNode;
 	n->len = n->len - i;
 
+	//We have a new internal node
+	nIntNodes++;
+	if (lowestIntNode == nullptr ||
+		nNode->stringDepth > lowestIntNode->stringDepth) {
+		lowestIntNode = nNode;
+	}
+
 	return nNode;
 }
 
@@ -289,8 +301,6 @@ Tree::DisplayChildren(
 void
 Tree::EnumerateNodesDFS()
 {
-	nLeaves = 0;
-	nIntNodes = 0;
 	printCount = 0;
 	recursiveEnumerateNodesDFS(root);
 	std::cout << std::endl;
@@ -302,13 +312,6 @@ Tree::recursiveEnumerateNodesDFS(
 	Node *n
 	)
 {
-	if (n->child == nullptr) {
-		nLeaves++;
-	}
-	else {
-		nIntNodes++;
-	}
-
 	//After 10 enumerations, print a newline
 	if (printCount == 10) {
 		std::cout << std::endl;
@@ -437,6 +440,21 @@ Tree::PrintTreeInfo() {
 	std::cout << "Number of leaves: " << nLeaves << std::endl;
 	std::cout << "Number of internal nodes: " << nIntNodes << std::endl;
 	std::cout << "Total number of nodes: " << nLeaves + nIntNodes << std::endl;
+}
+
+void
+Tree::PrintLongestRepeatSeqInfo() {
+	std::cout << "Length of longest repeating sequence: " <<
+	  lowestIntNode->stringDepth << std::endl;
+	std::cout << "Starting indeces of longest repeating sequence: " << std::endl;
+
+	Node *child = lowestIntNode->child;
+
+	while (child != nullptr) {
+		std::cout << child->id << " ";
+		child = child->sibling;
+	}
+	std::cout << std::endl;
 }
 
 }
